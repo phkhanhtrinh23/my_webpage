@@ -33,6 +33,24 @@
       }
 
       .dropdown:hover .dropdown-content {display: block;}
+
+      .product-button{
+        background-color: #f1f1f1;
+        color: #093545;
+        font-size: 1.125rem;
+        margin-top: 7px;
+        border: none;
+        background: none;
+      }
+
+      .logout-button{
+        background-color: #f1f1f1;
+        color: #093545;
+        font-size: 1.125rem;
+        margin-top: 7px;
+        border: none;
+        background: none;
+      }
     </style>
   </head>
   <body>
@@ -42,7 +60,7 @@
           <li><a href="index.php?page=home" class="nav-link">Home</a></li>
           <li>
             <div class="dropdown">
-              <button class="nav-link" onclick="location.href='index.php?page=product'">Products</button>
+              <button class="product-button" onclick="location.href='index.php?page=product'">Products</button>
               <div class="dropdown-content">
                 <a href="index.php?page=laptop">Laptop</a>
                 <!-- <a href="#">Mobile phone</a>
@@ -50,7 +68,7 @@
               </div>
             </div>
           </li>
-          <li><a href="index.php?page=contact" class="nav-link">Contacts</a></li>
+          <!-- <li><a href="index.php?page=contact" class="nav-link">Contacts</a></li> -->
           <?php
             session_start();
 
@@ -66,10 +84,11 @@
             }
             else{
               echo "<li><a href='index.php?page=login' class='nav-link' id='ch'> Welcome " . $_SESSION['cookie_name'] . "!</a></li>";
-              echo "<li> 
-              <form method='post' action='logout.php'>
-              <input type='submit' name='logout' value='Log out'/>
-              </form>
+              echo "
+              <li> 
+                <form method='post' action='logout.php'>
+                  <input class='logout-button' type='submit' name='logout' value='Log out'/>
+                </form>
               </li>";
             }
           ?>

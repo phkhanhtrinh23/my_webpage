@@ -65,7 +65,7 @@
 
             .dropdown_content_search {
                 display: none;
-                left: 25%;
+                left: 43%;
                 position: absolute;
                 background-color: #f6f6f6;
                 min-width: 100px;
@@ -88,7 +88,7 @@
         <script>
             function click_item(str){
                 document.getElementById("search_bar").value = str.replace(/\u2002/g, " ");
-                document.getElementById("search_bar").value = document.getElementById("search_bar").value.replace(" ", " ");
+                // document.getElementById("search_bar").value = document.getElementById("search_bar").value.replace(" ", " ");
             }
 
             function show_items(str) {
@@ -129,12 +129,13 @@
             }
         </script>
         <form class="form-group" method="post" action="" style="text-align: center;">
+            Price ascending <input type="radio" name="sort" value="asc">
+            Price descending <input type="radio" name="sort" value="des">
             <input id="search_bar" type="text" name="search_bar" placeholder="Search your product here..." onkeyup="show_items()">
             <button type="submit" name="search"> Search </button> <br>
             <div id="search_drop_down" class="dropdown_content_search"></div>
-            Price ascending <input type="radio" name="sort" value="asc">
-            Price descending <input type="radio" name="sort" value="des">
         </form>
+        <div style="margin-bottom: 200px;"></div>
         <div>
             <?php
                 if (isset($_POST["search"]) && strlen($_POST["search_bar"]) > 0){
@@ -204,9 +205,49 @@
                                         <p><button>View</button></p>
                                     </div>
                                 </form>
-                <?php
+            <?php
                             }
                         }
+                    }
+                }
+                elseif (isset($_POST["sort"]) && $_POST["sort"] == "asc"){
+                    $sql = "SELECT * FROM products ORDER BY price ASC";
+                    $result = mysqli_query($conn, $sql);
+
+                    while ($data = mysqli_fetch_assoc($result)) {
+            ?>
+                        <form method="post" action="index.php?page=item">
+                            <div class="card">
+                                <img style="style=width:100%" src="./images/<?php echo $data['imagename'];?>">
+                                <p class="productname"><?php echo $data['productname'];?></p>
+                                <p class="price"><?php echo $data['price'];?></p>
+                                <p><?php echo $data['description'];?></p>
+
+                                <input type='hidden' name ="id" value=<?php echo $data['id'];?>>
+                                <p><button>View</button></p>
+                            </div>
+                        </form>
+            <?php
+                    }
+                }
+                elseif (isset($_POST["sort"]) && $_POST["sort"] == "des"){
+                    $sql = "SELECT * FROM products ORDER BY price DESC";
+                    $result = mysqli_query($conn, $sql);
+
+                    while ($data = mysqli_fetch_assoc($result)) {
+            ?>
+                        <form method="post" action="index.php?page=item">
+                            <div class="card">
+                                <img style="style=width:100%" src="./images/<?php echo $data['imagename'];?>">
+                                <p class="productname"><?php echo $data['productname'];?></p>
+                                <p class="price"><?php echo $data['price'];?></p>
+                                <p><?php echo $data['description'];?></p>
+
+                                <input type='hidden' name ="id" value=<?php echo $data['id'];?>>
+                                <p><button>View</button></p>
+                            </div>
+                        </form>
+            <?php
                     }
                 }
                 else {
